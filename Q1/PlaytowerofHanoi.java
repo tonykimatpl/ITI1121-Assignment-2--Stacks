@@ -14,9 +14,10 @@ public class PlaytowerofHanoi{
 
     if(choice == 0){
        while(!isSolved){
-         if(rods[0].length == 0 && rods[1].length ==0){
+         if(game.rods[0].size() == 0 && game.rods[1].size() ==0){
            System.out.println("Congratulations! You have solved the puzzle in "+numOfMoves+" moves.");
            isSolved = true;
+           break;
          }
          if(numOfMoves == maxMoves){
            System.out.println("You have reached the maximum number of moves allowed and the tower has not been solved. You lose!");
@@ -26,11 +27,11 @@ public class PlaytowerofHanoi{
         	int moveFrom = towerScan.nextInt();
         	System.out.println("What rod are you moving the disk to? (0,1,2): ");
         	int moveTo = towerScan.nextInt();
-         	if(this.legalMove(moveFrom,moveTo)){
-           	this.move(moveFrom,moveTo);
+         	if(game.legalMove(moveFrom,moveTo)){
+           	game.move(moveFrom,moveTo);
             numOfMoves++;
          }
-         if(!this.legalMove(moveFrom,moveTo)){
+         else if(!game.legalMove(moveFrom,moveTo)){
            System.out.println("This is not a legal move. Please try again with a legal move.");
          }
        }

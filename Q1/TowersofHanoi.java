@@ -1,29 +1,31 @@
 public class TowersofHanoi{
-	private Stack<Integer>[] rods;
+	public ArrayStack[] rods;
 	private int n;
 
 	public TowersofHanoi(int n){
-		rods = new ArrayStack[3];
-		rods[0] = new ArrayStack<Integer>(n);
-		rods[1] = new ArrayStack<Integer>(n);
-		rods[2] = new ArrayStack<Integer>(n);
+		rods = new ArrayStack[]{new ArrayStack<Integer>(n),new ArrayStack<Integer>(n),new ArrayStack<Integer>(n)};
 		this.n = n;
     for(int i=n; i>0; i--){
 			rods[0].push(i);
 		}
 	}
 	public boolean legalMove(int a, int b){
-		if(rods[a].peek() < rods[b].peek()){
+		Object indexatA = rods[a].peek();
+		Object indexatB = rods[b].peek();
+		if(indexatB == null){
 			return true;
 		}
-		else{
+		else if((int)indexatA > (int)indexatB){
 			return false;
+		}
+		else{
+			return true;
 		}
 	}
 
 	public boolean move(int a, int b){
 		if(legalMove(a, b)){
-      int discNum = rods[a].pop();
+      int discNum = (int)rods[a].pop();
 			rods[b].push(discNum);
       System.out.println("disc "+discNum+" moved from rod "+a+" to rod "+b);
 		}
