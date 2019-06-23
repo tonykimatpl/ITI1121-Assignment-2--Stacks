@@ -4,44 +4,54 @@ Noël Khalaf, Tony Kim
 ITI1121
 */
 /*Utility class MyCalculator*/
+import java.util.Arrays;
+import java.util.List;
 public class MyCalculator{
-	public static boolean isBalanced(String s){
+  private static final char CURLY_OPEN = '{';
+  private static final char CURLY_CLOSE = '}';
+  private static final char ARROW_OPEN = '<';
+  private static final char ARROW_CLOSE = '>';
+  private static final char SQUARE_OPEN = '[';
+  private static final char SQUARE_CLOSE = ']';
+  private static final char ROUND_OPEN = '(';
+  private static final char ROUND_CLOSE = ')';
+    public static boolean isBalanced(String s){
 		Stack<Character> stack = new ArrayStack<Character>(100);
-		
+
 		for(int i=0; i<s.length(); i++){
 			char c = s.charAt(i);
-			if(c == '{' || c == '[' || c == '(' || c == '<'){
+			if(c == CURLY_OPEN || c == SQUARE_OPEN || c == ROUND_OPEN || c == ARROW_OPEN){
 				stack.push(c);
 			}
-			else if(c == '}'){
+			else if(c == CURLY_CLOSE){
 				if(stack.isEmpty()){
 					return false;
 				}
-				if(stack.pop() != '{'){
+				if(stack.pop() != CURLY_OPEN){
 					return false;
 				}
 			}
-			else if(c == ']'){
+			else if(c == SQUARE_CLOSE){
 				if(stack.isEmpty()){
 					return false;
 				}
-				if(stack.pop() != '['){
+				if(stack.pop() != SQUARE_OPEN){
 					return false;
 				}
 			}
-			else if(c == ')'){
+			else if(c == ROUND_CLOSE){
 				if(stack.isEmpty()){
 					return false;
 				}
-				if(stack.pop() != '('){
+				if(stack.pop() != ROUND_OPEN){
 					return false;
 				}
 			}
-			else if(c == '>'){
+			else if(c == ARROW_CLOSE){
 				if(stack.isEmpty()){
 					return false;
 				}
-				if(stack.pop() != '<'){
+				if(stack.pop() != ARROW_OPEN){
 					return false;
 				}
 			}
@@ -49,14 +59,51 @@ public class MyCalculator{
 		return stack.isEmpty();
 	}
 	public static String infixToPostfix(String infix){
-		if(isBalanced()){
-			String postfix = "";
-			Stack<T> stack = new ArrayStack<T>(100);
-			
-			
-		}
-		else{
-			return "infix is not a balanced expression";
-		}
+		String postfix;
+  	String ops[] = {"(","{","[","<",")","}","]",">","+","-","*","/"};
+		List<String> list = Arrays.asList(ops);
+    String closedBrackets[] = {")","}","]",">"};
+		List<String> listClosed = Arrays.asList(closedBrackets);
+    String mult[] = {"*","/"};
+		List<String> listMult = Arrays.asList(mult);
+    String add[] = {"+","-"};
+		List<String> listAdd = Arrays.asList(add);
+    Stack<String> calcStack = new ArrayStack<String>(100);
+    if(isBalanced(infix)){
+      for(int i=0; i<infix.length(); i++){
+        String c = infix.charAt(i);
+        if(c.isDigit()){
+          postfix += c+' ';
+        }
+        else if(list.contains(c)){
+          calcStack.push(c);
+          if(listMult.contains(c) && listMult.contains(calcStack.peek())){
+            postfix += calcStack.pop()+' ';
+          	calcStack.push(c);
+          }
+          if(listAdd.contains(c) && listAdd.contains(calcStack.peek())){
+            postfix += calcStack.pop()+' ';
+          	calcStack.push(c);
+          }
+          if(listAdd.contains(c) && listMult.contains(calcStack.peek())){
+            postfix += calcStack.pop()+' ';
+            if(listAdd.contains(calcStack.peek())){
+              postfix += calcStack.pop() +' ';
+              calcStack.push(c);
+            }
+          }
+
+          if(listClosed.contains(c)){
+            calcStack.pop();
+            postfix += calcStack.pop()+' ';
+            if(listAdd.contains(calcStack.peek())){
+              postfix += calcStack.pop()+' ';
+            }
+            calcStack.pop();
+          }
+        }
+
+        }
+      }
+    }
 	}
-}
