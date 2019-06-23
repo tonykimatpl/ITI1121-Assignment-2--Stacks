@@ -76,7 +76,7 @@ public class MyCalculator{
       for(int i=0; i<infix.length(); i++){
         String c = String.valueOf(infix.charAt(i));
         if(isNumeric(c)){
-        	postfix += c+' ';
+        	postfix += c + ' ';
         }
         else if(list.contains(c)){
           if(listMult.contains(c) && listMult.contains(calcStack.peek())){
@@ -97,10 +97,11 @@ public class MyCalculator{
 
           if(listClosed.contains(c)){
             postfix += calcStack.pop()+' ';
-            if(listAdd.contains(calcStack.peek())){
-              postfix += calcStack.pop()+' ';
-            }
           	calcStack.pop();
+						calcStack.pop();
+						calcStack.pop();
+						calcStack.pop();
+						calcStack.pop();
           }
 					else{
 						calcStack.push(c);
