@@ -15,7 +15,8 @@ public class MyCalculator{
   private static final char SQUARE_CLOSE = ']';
   private static final char ROUND_OPEN = '(';
   private static final char ROUND_CLOSE = ')';
-    public static boolean isBalanced(String s){
+
+  public static boolean isBalanced(String s){
 		Stack<Character> stack = new ArrayStack<Character>(100);
 
 		for(int i=0; i<s.length(); i++){
@@ -59,7 +60,7 @@ public class MyCalculator{
 		return stack.isEmpty();
 	}
 	public static String infixToPostfix(String infix){
-		String postfix;
+		String postfix = " ";
   	String ops[] = {"(","{","[","<",")","}","]",">","+","-","*","/"};
 		List<String> list = Arrays.asList(ops);
     String closedBrackets[] = {")","}","]",">"};
@@ -69,11 +70,12 @@ public class MyCalculator{
     String add[] = {"+","-"};
 		List<String> listAdd = Arrays.asList(add);
     Stack<String> calcStack = new ArrayStack<String>(100);
+
     if(isBalanced(infix)){
       for(int i=0; i<infix.length(); i++){
-        String c = infix.charAt(i);
-        if(c.isDigit()){
-          postfix += c+' ';
+        String c = String.valueOf(infix.charAt(i));
+        if(isNumeric(c)){
+        	postfix += c+' ';
         }
         else if(list.contains(c)){
           calcStack.push(c);
@@ -102,8 +104,24 @@ public class MyCalculator{
             calcStack.pop();
           }
         }
-
         }
       }
+			return postfix;
+    }
+		public static boolean isNumeric(final String str) {
+
+        // null or empty
+        if (str == null || str.length() == 0) {
+            return false;
+        }
+
+        for (char c : str.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                return false;
+            }
+        }
+
+        return true;
+
     }
 	}
