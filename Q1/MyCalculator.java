@@ -152,6 +152,7 @@ public class MyCalculator{
 							break;
 						default: result = 0;
 					}
+					evalStack.push((int)result);
 				}
       }
 			return result;

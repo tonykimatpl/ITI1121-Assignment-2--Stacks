@@ -6,13 +6,11 @@ public class QuestionTwo{
     while(!finished){
       System.out.println("Enter an infix expression or q to quit: ");
       String expression = calcScan.nextLine();
-      System.out.println(expression);
       expression.trim();
       if(expression.equalsIgnoreCase("q")){
         finished = true;
       }
       else{
-        System.out.println(expression);
         if(MyCalculator.isBalanced(expression)){
           System.out.println(expression +" is balanced");
           String PostfixExpression = MyCalculator.infixToPostfix(expression);
