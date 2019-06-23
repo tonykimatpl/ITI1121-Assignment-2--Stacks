@@ -91,20 +91,22 @@ public class MyCalculator{
             postfix += calcStack.pop()+' ';
             if(listAdd.contains(calcStack.peek())){
               postfix += calcStack.pop() +' ';
-              calcStack.push(c);
             }
+            calcStack.push(c);
           }
 
           if(listClosed.contains(c)){
-            calcStack.pop();
             postfix += calcStack.pop()+' ';
             if(listAdd.contains(calcStack.peek())){
               postfix += calcStack.pop()+' ';
             }
-            calcStack.pop();
+          	calcStack.pop();
           }
         }
         }
+			while(calcStack.peek() != null){
+        postfix += calcStack.pop() + ' ';
+      }
       }
 			else{
 				String err = "The provided infix is invalid. Please try again.";
@@ -123,5 +125,39 @@ public class MyCalculator{
         }
         return true;
 
+    }
+  	public static double evaluate(String postfix){
+      Stack<String> evalStack = new ArrayStack<String>(100);
+      for(int i=0; i<postfix.length(); i++){
+        String c = String.valueOf(postfix.charAt(i));
+        if(isNumeric(String.valueOf(c))){
+          evalStack.push(c);
+        }
+        else if(c == "+"){
+          double b = Double.parseDouble(evalStack.pop());
+          double a = Double.parseDouble(evalStack.pop());
+          double result = a+b;
+          evalStack.push(Double.toString(result));
+        }
+        else if(c == "-"){
+          double b = Double.parseDouble(evalStack.pop());
+          double a = Double.parseDouble(evalStack.pop());
+          double result = a-b;
+          evalStack.push(Double.toString(result));
+        }
+        else if(c == "*"){
+          double b = Double.parseDouble(evalStack.pop());
+          double a = Double.parseDouble(evalStack.pop());
+          double result = a*b;
+          evalStack.push(Double.toString(result));
+        }
+        else if(c == "/"){
+          double b = Double.parseDouble(evalStack.pop());
+          double a = Double.parseDouble(evalStack.pop());
+          double result = a/b;
+          evalStack.push(Double.toString(result));
+        }
+      }
+      return Double.parseDouble(evalStack.pop());
     }
 	}
