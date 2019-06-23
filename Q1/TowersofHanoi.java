@@ -1,7 +1,7 @@
 public class TowersofHanoi{
 	private Stack<Integer>[] rods;
 	private int n;
-  
+
 	public TowersofHanoi(int n){
 		rods = new ArrayStack[3];
 		rods[0] = new ArrayStack<Integer>(n);
@@ -13,14 +13,14 @@ public class TowersofHanoi{
 		}
 	}
 	public boolean legalMove(int a, int b){
-		if(rods[a].peek() < rods[b].peek()){	
+		if(rods[a].peek() < rods[b].peek()){
 			return true;
 		}
 		else{
 			return false;
 		}
 	}
-	
+
 	public boolean move(int a, int b){
 		if(legalMove(a, b)){
       int discNum = rods[a].pop();
@@ -30,8 +30,9 @@ public class TowersofHanoi{
 		else{
 			return false;
 		}
+		return true;
 	}
-	
+
 	public boolean move(int m, int a, int b, int c){
 		if(m == 1){
       move(a,b);
@@ -40,16 +41,17 @@ public class TowersofHanoi{
       move(m-1,a,c,b);
       move(a,b);
       move(m-1,c,b,a);
-    } 
+    }
+		return true;
 	}
-	
+
 	public void showTowerStates(){
     Stack[] tempRods = new ArrayStack[3];
-    tempRods = this.rods.copy();
+    tempRods = this.rods.clone();
     String firstTow = "First tower = ";
     String secondTow = "Second tower = ";
     String thirdTow = "Third tower = ";
-    
+
 		while(tempRods[0].peek()!=null){
       firstTow += rods[0].pop()+", ";
     }
@@ -63,7 +65,7 @@ public class TowersofHanoi{
     System.out.println(secondTow);
     System.out.println(thirdTow);
 	}
-	
+
 	public void solvegame(){
 		move(this.n,0,2,1);
 	}
