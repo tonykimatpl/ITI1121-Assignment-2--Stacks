@@ -15,6 +15,7 @@ public class MyCalculator{
   private static final char SQUARE_CLOSE = ']';
   private static final char ROUND_OPEN = '(';
   private static final char ROUND_CLOSE = ')';
+	private static double result = 0.0;
 
   public static boolean isBalanced(String s){
 		Stack<Character> stack = new ArrayStack<Character>(100);
@@ -60,7 +61,7 @@ public class MyCalculator{
 		return stack.isEmpty();
 	}
 	public static String infixToPostfix(String infix){
-		String postfix = " ";
+		String postfix = "";
   	String ops[] = {"(","{","[","<",")","}","]",">","+","-","*","/"};
 		List<String> list = Arrays.asList(ops);
     String closedBrackets[] = {")","}","]",">"};
@@ -78,7 +79,6 @@ public class MyCalculator{
         	postfix += c+' ';
         }
         else if(list.contains(c)){
-          calcStack.push(c);
           if(listMult.contains(c) && listMult.contains(calcStack.peek())){
             postfix += calcStack.pop()+' ';
           	calcStack.push(c);
@@ -102,6 +102,9 @@ public class MyCalculator{
             }
           	calcStack.pop();
           }
+					else{
+						calcStack.push(c);
+					}
         }
         }
 			while(calcStack.peek() != null){
@@ -127,37 +130,30 @@ public class MyCalculator{
 
     }
   	public static double evaluate(String postfix){
-      Stack<String> evalStack = new ArrayStack<String>(100);
-      for(int i=0; i<postfix.length(); i++){
-        String c = String.valueOf(postfix.charAt(i));
-        if(isNumeric(String.valueOf(c))){
-          evalStack.push(c);
-        }
-        else if(c == "+"){
-          double b = Double.parseDouble(evalStack.pop());
-          double a = Double.parseDouble(evalStack.pop());
-          double result = a+b;
-          evalStack.push(Double.toString(result));
-        }
-        else if(c == "-"){
-          double b = Double.parseDouble(evalStack.pop());
-          double a = Double.parseDouble(evalStack.pop());
-          double result = a-b;
-          evalStack.push(Double.toString(result));
-        }
-        else if(c == "*"){
-          double b = Double.parseDouble(evalStack.pop());
-          double a = Double.parseDouble(evalStack.pop());
-          double result = a*b;
-          evalStack.push(Double.toString(result));
-        }
-        else if(c == "/"){
-          double b = Double.parseDouble(evalStack.pop());
-          double a = Double.parseDouble(evalStack.pop());
-          double result = a/b;
-          evalStack.push(Double.toString(result));
-        }
+			Stack<Integer> evalStack = new ArrayStack<Integer>(100);
+      int a,b;
+	 		for(int i=0; i<postfix.length(); i+=2){
+        char c = postfix.charAt(i);
+				if((48 <= c) && (c <= 57)){
+					evalStack.push((int)(c - 48));
+				}
+				else{
+					b = evalStack.pop();
+					a = evalStack.pop();
+					switch(c)
+					{
+						case '+': result = a + b;
+							break;
+						case '-': result = a - b;
+							break;
+						case '*': result = a * b;
+							break;
+						case '/': result = a / b;
+							break;
+						default: result = 0;
+					}
+				}
       }
-      return Double.parseDouble(evalStack.pop());
+			return result;
     }
 	}
