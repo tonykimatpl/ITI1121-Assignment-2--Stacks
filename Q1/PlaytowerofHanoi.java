@@ -9,6 +9,7 @@ public class PlaytowerofHanoi{
     int numDisc = towerScan.nextInt();
     int maxMoves = (int) Math.pow(numDisc,2)-1;
     TowersofHanoi game = new TowersofHanoi(numDisc);
+    game.showTowerStates();
     System.out.println("Would you like to play or see a demo of the game? Enter 0 to play and 1 to see a demo. ");
     int choice = towerScan.nextInt();
 

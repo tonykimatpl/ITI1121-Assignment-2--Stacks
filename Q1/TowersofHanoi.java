@@ -1,3 +1,4 @@
+import java.util.Arrays;
 public class TowersofHanoi{
 	public ArrayStack[] rods;
 	private int n;
@@ -48,24 +49,25 @@ public class TowersofHanoi{
 	}
 
 	public void showTowerStates(){
-    Stack[] tempRods = new ArrayStack[3];
-    tempRods = this.rods.clone();
     String firstTow = "First tower = ";
     String secondTow = "Second tower = ";
     String thirdTow = "Third tower = ";
 
-		while(tempRods[0].peek()!=null){
-      firstTow += rods[0].pop()+", ";
+		while(rods[0].peek()!=null){
+      firstTow += rods[0].pop()+" ";
     }
-    while(tempRods[1].peek()!=null){
-      secondTow += rods[1].pop()+", ";
+    while(rods[1].peek()!=null){
+      secondTow += rods[1].pop()+" ";
     }
-    while(tempRods[2].peek()!=null){
-      thirdTow += rods[2].pop()+", ";
+    while(rods[2].peek()!=null){
+      thirdTow += rods[2].pop()+" ";
     }
     System.out.println(firstTow);
     System.out.println(secondTow);
     System.out.println(thirdTow);
+		for(int i=n; i>0; i--){
+			rods[0].push(i);
+		}
 	}
 
 	public void solvegame(){
