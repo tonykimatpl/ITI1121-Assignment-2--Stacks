@@ -102,6 +102,9 @@ public class MyCalculator{
 						calcStack.pop();
 						calcStack.pop();
 						calcStack.pop();
+            calcStack.pop();
+            calcStack.pop();
+            calcStack.pop();
           }
 					else{
 						calcStack.push(c);
@@ -110,6 +113,16 @@ public class MyCalculator{
         }
 			while(calcStack.peek() != null){
         postfix += calcStack.pop() + ' ';
+        calcStack.pop();
+        calcStack.pop();
+        calcStack.pop();
+        calcStack.pop();
+        calcStack.pop();
+        calcStack.pop();
+        calcStack.pop();
+        calcStack.pop();
+        calcStack.pop();
+        calcStack.pop();
       }
       }
 			else{
